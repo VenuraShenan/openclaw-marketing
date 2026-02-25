@@ -13,7 +13,7 @@ function Robot({ mousePosition }: { mousePosition: { x: number; y: number } }) {
   useEffect(() => {
     const loader = new GLTFLoader();
     loader.load(
-      '/robot.glb',
+      '/openclaw-marketing/robot.glb',
       (gltf) => {
         gltf.scene.scale.set(1.8, 1.8, 1.8);
         gltf.scene.position.set(0, -0.5, 0);
