@@ -6,7 +6,7 @@ import { useGLTF, Float, Environment, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
 
 function Robot({ mousePosition }: { mousePosition: { x: number; y: number } }) {
-  const { scene } = useGLTF('/openclaw-marketing/robot.glb');
+  const { scene } = useGLTF('/robot.glb');
   const groupRef = useRef<THREE.Group>(null);
   
   useEffect(() => {
