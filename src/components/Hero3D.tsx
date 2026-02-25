@@ -9,15 +9,30 @@ import * as THREE from 'three';
 function Robot({ mousePosition }: { mousePosition: { x: number; y: number } }) {
   const groupRef = useRef<THREE.Group>(null);
   const [scene, setScene] = useState<THREE.Object3D | null>(null);
+  const [mixer, setMixer] = useState<THREE.AnimationMixer | null>(null);
   
   useEffect(() => {
     const loader = new GLTFLoader();
     loader.load(
       '/robot.glb',
       (gltf) => {
-        gltf.scene.scale.set(1.8, 1.8, 1.8);
-        gltf.scene.position.set(0, -0.5, 0);
+        // Scale down 20%
+        gltf.scene.scale.set(1.44, 1.44, 1.44);
+        // Rotate -90 on Z axis
+        gltf.scene.rotation.z = -Math.PI / 2;
+        // Move down slightly
+        gltf.scene.position.set(0, -0.8, 0);
         setScene(gltf.scene);
+        
+        // Enable animations
+        if (gltf.animations && gltf.animations.length > 0) {
+          const animMixer = new THREE.AnimationMixer(gltf.scene);
+          gltf.animations.forEach((clip) => {
+            animMixer.clipAction(clip).play();
+          });
+          setMixer(animMixer);
+        }
+        
         console.log('Robot loaded!');
       },
       undefined,
@@ -25,7 +40,7 @@ function Robot({ mousePosition }: { mousePosition: { x: number; y: number } }) {
     );
   }, []);
 
-  useFrame(() => {
+  useFrame((state, delta) => {
     if (groupRef.current) {
       groupRef.current.rotation.y = THREE.MathUtils.lerp(
         groupRef.current.rotation.y,
@@ -38,6 +53,8 @@ function Robot({ mousePosition }: { mousePosition: { x: number; y: number } }) {
         0.05
       );
     }
+    // Update animation mixer
+    if (mixer) mixer.update(delta);
   });
 
   return (
