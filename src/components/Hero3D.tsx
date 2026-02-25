@@ -11,14 +11,14 @@ function Robot({ mousePosition }: { mousePosition: { x: number; y: number } }) {
   const [scene, setScene] = useState<THREE.Object3D | null>(null);
   
   useEffect(() => {
-    // Load GLTF manually to ensure correct path
     const loader = new GLTFLoader();
     loader.load(
-      '/openclaw-marketing/robot.glb',
+      '/robot.glb',
       (gltf) => {
         gltf.scene.scale.set(1.8, 1.8, 1.8);
         gltf.scene.position.set(0, -0.5, 0);
         setScene(gltf.scene);
+        console.log('Robot loaded!');
       },
       undefined,
       (err) => console.error('Error loading robot:', err)
@@ -73,7 +73,7 @@ function Particles() {
           args={[particles, 3]}
         />
       </bufferGeometry>
-      <pointsMaterial size={0.03} color="#f97316" transparent opacity={0.6} />
+      <pointsMaterial size={0.03} color="#8b5cf6" transparent opacity={0.6} />
     </points>
   );
 }
@@ -83,9 +83,9 @@ function Lights() {
     <>
       <ambientLight intensity={0.4} />
       <directionalLight position={[5, 10, 7]} intensity={1} color="#fff" />
-      <pointLight position={[-4, 2, 3]} intensity={1.5} color="#f97316" distance={15} />
-      <pointLight position={[4, -1, 3]} intensity={1.2} color="#fdba74" distance={15} />
-      <pointLight position={[0, 3, -3]} intensity={0.8} color="#fb923c" distance={12} />
+      <pointLight position={[-4, 2, 3]} intensity={1.5} color="#8b5cf6" distance={15} />
+      <pointLight position={[4, -1, 3]} intensity={1.2} color="#06b6d4" distance={15} />
+      <pointLight position={[0, 3, -3]} intensity={0.8} color="#a855f7" distance={12} />
     </>
   );
 }

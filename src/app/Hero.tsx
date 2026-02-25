@@ -1,7 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
 
 const Hero3D = dynamic(() => import('@/components/Hero3D'), { 
   ssr: false,
@@ -24,6 +25,22 @@ const links = [
 ];
 
 export default function Hero() {
+  const { scrollY } = useScroll();
+  const navOpacity = useTransform(scrollY, [0, 100], [0.6, 1]);
+
+  useEffect(() => {
+    // Smooth scroll handler
+    document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href')!);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  }, []);
+
   return (
     <main className="min-h-screen bg-darker">
       {/* Background */}
@@ -33,21 +50,24 @@ export default function Hero() {
       </div>
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-6 md:px-16 py-5 bg-darker/60 backdrop-blur-2xl border-b border-white/5">
+      <motion.nav 
+        style={{ opacity: navOpacity }}
+        className="fixed top-0 left-0 right-0 z-50 px-6 md:px-16 py-5 bg-darker/60 backdrop-blur-2xl border-b border-white/5"
+      >
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <a href="#" className="text-2xl font-extrabold tracking-tight text-white">
             Open<span className="text-primary">Claw</span>
           </a>
           <div className="hidden md:flex items-center gap-10">
-            <a href="#hero" className="text-slate-400 hover:text-primary transition">Home</a>
-            <a href="#features" className="text-slate-400 hover:text-primary transition">Features</a>
-            <a href="#contact" className="text-slate-400 hover:text-primary transition">Contact</a>
+            <a href="#hero" className="text-slate-400 hover:text-primary transition nav-link">Home</a>
+            <a href="#features" className="text-slate-400 hover:text-primary transition nav-link">Features</a>
+            <a href="#contact" className="text-slate-400 hover:text-primary transition nav-link">Contact</a>
             <a href="https://docs.openclaw.ai" className="px-5 py-2.5 bg-gradient-to-r from-primary to-primary-light text-white rounded-lg font-semibold text-sm hover:shadow-lg hover:shadow-primary/30 transition">
               Docs
             </a>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Hero Section */}
       <section id="hero" className="min-h-screen flex flex-col relative z-10 pt-28 pb-16">

@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-primary: #f97316;
-  --color-primary-dark: #ea580c;
-  --color-primary-light: #fb923c;
-  --color-accent: #fdba74;
+  --color-primary: #8b5cf6;
+  --color-primary-dark: #7c3aed;
+  --color-primary-light: #a78bfa;
+  --color-accent: #06b6d4;
   --color-darker: #0a0a0f;
   --color-dark: #111113;
   --color-background: var(--color-darker);
@@ -17,12 +17,13 @@ body {
   color: #f1f5f9;
   font-family: 'Poppins', sans-serif;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 .bg-grid {
   background-image: 
-    linear-gradient(rgba(249, 115, 22, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(249, 115, 22, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
@@ -33,7 +34,7 @@ body {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fdba74 100%);
+  background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 50%, #06b6d4 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -43,7 +44,7 @@ body {
   position: absolute;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(249, 115, 22, 0.25) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, transparent 70%);
   filter: blur(100px);
   animation: pulse-glow 4s ease-in-out infinite;
 }
@@ -60,4 +61,8 @@ body {
 
 .animate-float {
   animation: float 3s ease-in-out infinite;
+}
+
+html {
+  scroll-behavior: smooth;
 }
