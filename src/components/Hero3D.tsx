@@ -10,6 +10,7 @@ function Robot({ mousePosition }: { mousePosition: { x: number; y: number } }) {
   const groupRef = useRef<THREE.Group>(null);
   const [scene, setScene] = useState<THREE.Object3D | null>(null);
   const [mixer, setMixer] = useState<THREE.AnimationMixer | null>(null);
+  const [targetRotation, setTargetRotation] = useState(0);
   
   useEffect(() => {
     const loader = new GLTFLoader();
@@ -18,8 +19,8 @@ function Robot({ mousePosition }: { mousePosition: { x: number; y: number } }) {
       (gltf) => {
         // Scale down 20%
         gltf.scene.scale.set(1.44, 1.44, 1.44);
-        // Rotate -90 on Z axis
-        gltf.scene.rotation.z = -Math.PI / 2;
+        // Rotate -90 on Y axis
+        gltf.scene.rotation.y = -Math.PI / 2;
         // Move down slightly
         gltf.scene.position.set(0, -0.8, 0);
         setScene(gltf.scene);
@@ -40,16 +41,21 @@ function Robot({ mousePosition }: { mousePosition: { x: number; y: number } }) {
     );
   }, []);
 
+  // Click to rotate
+  useEffect(() => {
+    const handleClick = () => {
+      setTargetRotation(prev => prev + Math.PI / 2); // Rotate 90° on click
+    };
+    window.addEventListener('click', handleClick);
+    return () => window.removeEventListener('click', handleClick);
+  }, []);
+
   useFrame((state, delta) => {
     if (groupRef.current) {
+      // Smooth rotation to target
       groupRef.current.rotation.y = THREE.MathUtils.lerp(
         groupRef.current.rotation.y,
-        mousePosition.x * 0.5,
-        0.05
-      );
-      groupRef.current.rotation.x = THREE.MathUtils.lerp(
-        groupRef.current.rotation.x,
-        -mousePosition.y * 0.3,
+        targetRotation,
         0.05
       );
     }
