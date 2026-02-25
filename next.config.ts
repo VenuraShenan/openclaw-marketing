@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   },
   basePath: '/openclaw-marketing',
   assetPrefix: '/openclaw-marketing/',
+  // Ensure static files are copied
+  trailingSlash: true,
 };
 
 export default nextConfig;
