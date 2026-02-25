@@ -22,7 +22,7 @@ function Robot({ mousePosition }: { mousePosition: { x: number; y: number } }) {
         // Rotate -90 on Y axis
         gltf.scene.rotation.y = -Math.PI / 2;
         // Move down slightly
-        gltf.scene.position.set(0, -0.8, 0);
+        gltf.scene.position.set(0, -1.2, 0);
         setScene(gltf.scene);
         
         // Enable animations
