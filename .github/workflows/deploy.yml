@@ -32,6 +32,11 @@ jobs:
       - name: Build
         run: npm run build
       
+      - name: Copy robot.glb for basePath
+        run: |
+          mkdir -p out/openclaw-marketing
+          cp public/robot.glb out/openclaw-marketing/robot.glb
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
