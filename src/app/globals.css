@@ -1,26 +1,63 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: #f97316;
+  --color-primary-dark: #ea580c;
+  --color-primary-light: #fb923c;
+  --color-accent: #fdba74;
+  --color-darker: #0a0a0f;
+  --color-dark: #111113;
+  --color-background: var(--color-darker);
+  --color-foreground: #f1f5f9;
+  --font-sans: var(--font-poppins);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #0a0a0f;
+  color: #f1f5f9;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+.bg-grid {
+  background-image: 
+    linear-gradient(rgba(249, 115, 22, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(249, 115, 22, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fdba74 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.25) 0%, transparent 70%);
+  filter: blur(100px);
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }
