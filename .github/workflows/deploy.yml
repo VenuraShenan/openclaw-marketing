@@ -32,9 +32,6 @@ jobs:
       - name: Build
         run: npm run build
       
-      - name: List output files
-        run: ls -la out/ && ls -la out/_next/static/ 2>/dev/null || true
-      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
