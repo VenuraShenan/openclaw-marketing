@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  basePath: '/openclaw-marketing',
+  assetPrefix: '/openclaw-marketing/',
 };
 
 export default nextConfig;

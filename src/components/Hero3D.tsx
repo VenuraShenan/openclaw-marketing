@@ -1,22 +1,31 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useGLTF, Float, Environment, ContactShadows } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Float, ContactShadows, Environment } from '@react-three/drei';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import * as THREE from 'three';
 
 function Robot({ mousePosition }: { mousePosition: { x: number; y: number } }) {
-  const { scene } = useGLTF('/robot.glb');
   const groupRef = useRef<THREE.Group>(null);
+  const [scene, setScene] = useState<THREE.Object3D | null>(null);
   
   useEffect(() => {
-    if (scene) {
-      scene.scale.set(1.8, 1.8, 1.8);
-      scene.position.set(0, -0.5, 0);
-    }
-  }, [scene]);
+    // Load GLTF manually to ensure correct path
+    const loader = new GLTFLoader();
+    loader.load(
+      '/openclaw-marketing/robot.glb',
+      (gltf) => {
+        gltf.scene.scale.set(1.8, 1.8, 1.8);
+        gltf.scene.position.set(0, -0.5, 0);
+        setScene(gltf.scene);
+      },
+      undefined,
+      (err) => console.error('Error loading robot:', err)
+    );
+  }, []);
 
-  useFrame((state) => {
+  useFrame(() => {
     if (groupRef.current) {
       groupRef.current.rotation.y = THREE.MathUtils.lerp(
         groupRef.current.rotation.y,
@@ -33,7 +42,7 @@ function Robot({ mousePosition }: { mousePosition: { x: number; y: number } }) {
 
   return (
     <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.3}>
-      <primitive ref={groupRef} object={scene} />
+      {scene && <primitive ref={groupRef} object={scene} />}
     </Float>
   );
 }
